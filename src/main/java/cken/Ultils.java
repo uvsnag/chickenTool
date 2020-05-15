@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Ultils {
 
-	public static List<String> readFileToList(final String split, final String dirFile) {
+	public  List<String> readFileToList(final String split, final String dirFile) {
 		String strSource = null;
 		try {
 			strSource = new String(Files.readAllBytes(Paths.get(dirFile)));
