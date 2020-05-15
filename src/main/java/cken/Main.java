@@ -62,11 +62,27 @@ public class Main {
 //		convertToJson.maptToJson(convertToMap.convertStringFileDBToMap("D:\\1.txt"));
 //
 //		excellUltis.checkIntLong();
-
-		convertToSource.convertSQLToSourceSQL("D:\\1.txt");
+		sourceToSql();
+//		convertToSource.convertSQLToSourceSQL("D:\\1.txt");
 
 	}
 
+	static void sourceToSql() {
+		StringBuffer sqlBuf = new StringBuffer();
+		sqlBuf.append(" SELECT ");
+		sqlBuf.append(" COUNT (TRNMCF.CONTENTS_ID) AS CNT ");
+		sqlBuf.append(" FROM ");
+		sqlBuf.append("CTT").append(".");
+		sqlBuf.append("TRNMCAFEE");
+		sqlBuf.append(" TRNMCF ");
+		sqlBuf.append(" WHERE ");
+		sqlBuf.append(" TRNMCF.DELETE_YMD IS NULL ");
+		sqlBuf.append(" AND TRNMCF.INPUT_NO IS NOT NULL ");
+		sqlBuf.append(" AND TRNMCF.CONTENTS_ID = :CONTENTS_ID ");
+
+		String sql = sqlBuf.toString();
+		System.out.println(sql);
+	}
 	
 
 	static void showItemList(final List<String> list) {
