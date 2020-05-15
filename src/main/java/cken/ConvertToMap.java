@@ -31,7 +31,7 @@ public class ConvertToMap {
 		return result;
 	}
 
-	public HashMap<String, String> convertStringFileDBToMap() {
+	public HashMap<String, String> convertStringFileDBToMap( String dir) {
 
 		final String SPLIT = "\n";
 		// final String SEPR_STRING = " ";
@@ -39,7 +39,7 @@ public class ConvertToMap {
 
 		final HashMap<String, String> result = new LinkedHashMap<>();
 
-		final List<String> listStr = ultils.readFileToList(SPLIT, "E:\\f.txt");
+		final List<String> listStr = ultils.readFileToList(SPLIT, dir);
 
 		String lastString = null;
 

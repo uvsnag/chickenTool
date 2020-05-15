@@ -1,18 +1,8 @@
 package cken;
 
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
-
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author sangnv
@@ -20,11 +10,13 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class Main {
 
-	public static Ultils ultils= new Ultils();
-	public static ConvertToSource convertToSource= new ConvertToSource();
-	public static CompareList compareList= new CompareList();
-	public static ConvertToList convertToList= new ConvertToList();
-	public static ConvertToMap convertToMap= new ConvertToMap();
+	public static final Ultils ultils= new Ultils();
+	public static final ConvertToSource convertToSource= new ConvertToSource();
+	public static  final CompareList compareList= new CompareList();
+	public static  final ConvertToList convertToList= new ConvertToList();
+	public static  final ConvertToMap convertToMap= new ConvertToMap();
+	public static  final ConvertToJson convertToJson= new ConvertToJson();
+	public static  final ExcellUltis excellUltis= new ExcellUltis();
 	/**
 	 * @param args
 	 */
@@ -49,28 +41,27 @@ public class Main {
 				"moveYmd", "sendTelArea", "sendTelCity", "sendTelLocal", "sourceSeqNo", "targetSeqNo", "lineChangeYmd",
 				"catvCustomerNo", "hinmokuCd", "hinmokuName" };
 
-		// final List<String> listOne = Arrays.asList(arrOne);
-		// final List<String> listTwo = Arrays.asList(arrTwo);
-		// final List<String> listOne = convertStringSourceToList("D:\\1.txt");
-		// final List<String> listTwo = convertStringSourceToList("D:\\1.txt");
+//		final List<String> listOne = Arrays.asList(arrOne);
+//		final List<String> listTwo = Arrays.asList(arrTwo);
+//		final List<String> listOne = convertStringSourceToList("D:\\1.txt");
+//		final List<String> listTwo = convertStringSourceToList("D:\\1.txt");
 
-		// showItemList(listFromStringSource);
-
-		// System.out.println("listOne.size():" + listOne.size());
-		// System.out.println("listTwo.size():" + listTwo.size());
-
-		// compare list
-		// compareItemOrderInList(listOne, listTwo);
-		// checkListContainsAnotherList(listOne, listTwo);
-
-		// final List<String> listFromStringSource =
-		// convertStringSourceToList("E:\\f.txt");
-		// listToJson(listFromStringSource);
-
-		// maptToJson(convertStringSourceToMap("D:\\1.txt"));
-		// maptToJson(convertStringFileDBToMap());
-
-		// checkIntLong();
+//		showItemList(listTwo);
+//
+//		System.out.println("listOne.size():" + listOne.size());
+//		System.out.println("listTwo.size():" + listTwo.size());
+//
+//		// compare list
+//		compareList.compareItemOrderInList(listOne, listTwo);
+//		compareList.checkListContainsAnotherList(listOne, listTwo);
+//
+//		final List<String> listFromStringSource = convertToList.convertStringSourceToList("E:\\f.txt");
+//		convertToJson.listToJson(listFromStringSource);
+//
+//		convertToJson.maptToJson(convertToMap.convertStringSourceToMap("D:\\1.txt"));
+//		convertToJson.maptToJson(convertToMap.convertStringFileDBToMap("D:\\1.txt"));
+//
+//		excellUltis.checkIntLong();
 
 		convertToSource.convertSQLToSourceSQL("D:\\1.txt");
 
