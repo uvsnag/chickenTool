@@ -2,6 +2,10 @@ package cken;
 
 import java.util.List;
 
+/**
+ * @author sangnv
+ *
+ */
 public class CompareList {
 
 	public void compareItemOrderInList(final List<String> listOne, final List<String> listTwo) {

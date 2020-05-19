@@ -1,7 +1,7 @@
 package cken;
 
-
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -10,18 +10,19 @@ import java.util.List;
  */
 public class Main {
 
-	public static final Ultils ultils= new Ultils();
-	public static final ConvertToSource convertToSource= new ConvertToSource();
-	public static  final CompareList compareList= new CompareList();
-	public static  final ConvertToList convertToList= new ConvertToList();
-	public static  final ConvertToMap convertToMap= new ConvertToMap();
-	public static  final ConvertToJson convertToJson= new ConvertToJson();
-	public static  final ExcellUltis excellUltis= new ExcellUltis();
+	public static final Ultils ultils = new Ultils();
+	public static final ConvertToSource convertToSource = new ConvertToSource();
+	public static final CompareList compareList = new CompareList();
+	public static final ConvertToList convertToList = new ConvertToList();
+	public static final ConvertToMap convertToMap = new ConvertToMap();
+	public static final ConvertToJson convertToJson = new ConvertToJson();
+	public static final ExcellUltis excellUltis = new ExcellUltis();
+
 	/**
 	 * @param args
 	 */
 	public static void main(final String[] args) {
-		
+
 		final String[] arrOne = { "pipTel", "npKbn", "nttMoveKbn", "npTelArea", "npTelCity", "npTelLocal",
 				"npApplyKbnName", "npApplyKbnNameCon", "nttNameKana", "nttName", "notifyDispKbn", "telInfoKbn",
 				"helloPageKbn", "catchPhoneKbn", "numDisplayKbn", "catchNumDispKbn", "numRequestKbn", "repulseKbn",
@@ -41,29 +42,40 @@ public class Main {
 				"moveYmd", "sendTelArea", "sendTelCity", "sendTelLocal", "sourceSeqNo", "targetSeqNo", "lineChangeYmd",
 				"catvCustomerNo", "hinmokuCd", "hinmokuName" };
 
-//		final List<String> listOne = Arrays.asList(arrOne);
-//		final List<String> listTwo = Arrays.asList(arrTwo);
-//		final List<String> listOne = convertStringSourceToList("D:\\1.txt");
-//		final List<String> listTwo = convertStringSourceToList("D:\\1.txt");
+		final int CONVERT_SOURCE_TO_JSON = 0;
+		final int COMPARE_LIST = 1;
+		final int SOURCE_TO_SQL = 2;
+		final int SQL_TO_SOURCE = 3;
+		final int SHOW_LIST = 4;
 
-//		showItemList(listTwo);
-//
-//		System.out.println("listOne.size():" + listOne.size());
-//		System.out.println("listTwo.size():" + listTwo.size());
-//
-//		// compare list
-//		compareList.compareItemOrderInList(listOne, listTwo);
-//		compareList.checkListContainsAnotherList(listOne, listTwo);
-//
-//		final List<String> listFromStringSource = convertToList.convertStringSourceToList("E:\\f.txt");
-//		convertToJson.listToJson(listFromStringSource);
-//
-//		convertToJson.maptToJson(convertToMap.convertStringSourceToMap("D:\\1.txt"));
-//		convertToJson.maptToJson(convertToMap.convertStringFileDBToMap("D:\\1.txt"));
-//
-//		excellUltis.checkIntLong();
-		sourceToSql();
-//		convertToSource.convertSQLToSourceSQL("D:\\1.txt");
+		/* init var */
+		final List<String> listOne = Arrays.asList(arrOne);
+		final List<String> listTwo = convertToList.convertStringSourceToList("D:\\1.txt");
+
+		switch (CONVERT_SOURCE_TO_JSON) {
+		case CONVERT_SOURCE_TO_JSON:
+			final HashMap<String, String> result = convertToMap.convertStringSourceToMap("D:\\1.txt");
+			convertToJson.maptToJson(result);
+			break;
+		case COMPARE_LIST:
+			compareList.compareItemOrderInList(listOne, listTwo);
+			compareList.checkListContainsAnotherList(listOne, listTwo);
+			break;
+		case SOURCE_TO_SQL:
+			sourceToSql();
+			break;
+		case SQL_TO_SOURCE:
+			convertToSource.convertSQLToSourceSQL("D:\\1.txt");
+			break;
+		case SHOW_LIST:
+			showItemList(listTwo);
+
+			System.out.println("listOne.size():" + listOne.size());
+			System.out.println("listTwo.size():" + listTwo.size());
+			break;
+		default:
+
+		}
 
 	}
 
@@ -83,9 +95,8 @@ public class Main {
 		String sql = sqlBuf.toString();
 		System.out.println(sql);
 	}
-	
 
-	static void showItemList(final List<String> list) {
+	static void showItemListComment(final List<String> list) {
 		System.out.println("list.size(): " + list.size());
 		System.out.println("---------------------------");
 		for (final String item : list) {
@@ -95,5 +106,10 @@ public class Main {
 
 	}
 
+	static void showItemList(final List<String> list) {
+		for (final String item : list) {
+			System.out.println(item);
+		}
+	}
 
 }

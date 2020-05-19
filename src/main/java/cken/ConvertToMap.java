@@ -20,18 +20,24 @@ public class ConvertToMap {
 		String lastString = null;
 
 		for (final String str : listStr) {
-			String typeString = new String(str);
-			lastString = str.substring(str.lastIndexOf(SEPR_STRING) + 1);
+			try {
+				String typeString = new String(str);
+				lastString = str.substring(str.lastIndexOf(SEPR_STRING) + 1);
 
-			typeString = typeString.substring(0, typeString.lastIndexOf(SEPR_STRING));
-			typeString = typeString.substring(typeString.lastIndexOf(SEPR_STRING) + 1);
+				typeString = typeString.substring(0, typeString.lastIndexOf(SEPR_STRING));
+				typeString = typeString.substring(typeString.lastIndexOf(SEPR_STRING) + 1);
 
-			result.put(StringUtils.deleteWhitespace(lastString), StringUtils.deleteWhitespace(typeString));
+				result.put(StringUtils.deleteWhitespace(lastString), StringUtils.deleteWhitespace(typeString));
+
+			} catch (Exception e) {
+				System.out.println("in:" + str);
+				System.out.println("exception :" + e);
+			}
 		}
 		return result;
 	}
 
-	public HashMap<String, String> convertStringFileDBToMap( String dir) {
+	public HashMap<String, String> convertStringFileDBToMap(String dir) {
 
 		final String SPLIT = "\n";
 		// final String SEPR_STRING = " ";
