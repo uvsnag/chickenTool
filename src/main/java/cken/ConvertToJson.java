@@ -70,7 +70,6 @@ public class ConvertToJson {
 	}
 
 	public void listToJson(final List<String> list) {
-		System.out.println("==================================================" + "\n" + "\n");
 
 		String strResult = "{\n";
 		for (int i = 0; i < list.size() - 1; i++) {

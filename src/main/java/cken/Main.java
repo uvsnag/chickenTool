@@ -1,6 +1,5 @@
 package cken;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,6 +16,13 @@ public class Main {
 	public static final ConvertToMap convertToMap = new ConvertToMap();
 	public static final ConvertToJson convertToJson = new ConvertToJson();
 	public static final ExcellUltis excellUltis = new ExcellUltis();
+
+	public static final int CONVERT_SOURCE_TO_JSON = 0;
+	public static final int COMPARE_LIST = 1;
+	public static final int SOURCE_TO_SQL = 2;
+	public static final int SQL_TO_SOURCE = 3;
+	public static final int SHOW_LIST = 4;
+	public static final int CONVERT_FILE_TO_LIST = 5;
 
 	/**
 	 * @param args
@@ -42,17 +48,15 @@ public class Main {
 				"moveYmd", "sendTelArea", "sendTelCity", "sendTelLocal", "sourceSeqNo", "targetSeqNo", "lineChangeYmd",
 				"catvCustomerNo", "hinmokuCd", "hinmokuName" };
 
-		final int CONVERT_SOURCE_TO_JSON = 0;
-		final int COMPARE_LIST = 1;
-		final int SOURCE_TO_SQL = 2;
-		final int SQL_TO_SOURCE = 3;
-		final int SHOW_LIST = 4;
+		/** init var */
+//		final List<String> listOne1 = Arrays.asList(arrOne);
+//		final List<String> listTwo2 = convertToList.convertStringSourceToList("D:\\1.txt");
+		final List<String> listOne = convertToList.convertStringFileToList("D:\\1.txt", "\n");
+		final List<String> listTwo = convertToList.convertStringFileToList("D:\\2.txt", "\n");
 
-		/* init var */
-		final List<String> listOne = Arrays.asList(arrOne);
-		final List<String> listTwo = convertToList.convertStringSourceToList("D:\\1.txt");
+		/*********/
+		switch (COMPARE_LIST) {
 
-		switch (CONVERT_SOURCE_TO_JSON) {
 		case CONVERT_SOURCE_TO_JSON:
 			final HashMap<String, String> result = convertToMap.convertStringSourceToMap("D:\\1.txt");
 			convertToJson.maptToJson(result);
@@ -68,10 +72,13 @@ public class Main {
 			convertToSource.convertSQLToSourceSQL("D:\\1.txt");
 			break;
 		case SHOW_LIST:
+			showItemList(listOne);
 			showItemList(listTwo);
 
 			System.out.println("listOne.size():" + listOne.size());
 			System.out.println("listTwo.size():" + listTwo.size());
+			break;
+		case CONVERT_FILE_TO_LIST:
 			break;
 		default:
 
@@ -80,19 +87,46 @@ public class Main {
 	}
 
 	static void sourceToSql() {
-		StringBuffer sqlBuf = new StringBuffer();
-		sqlBuf.append(" SELECT ");
-		sqlBuf.append(" COUNT (TRNMCF.CONTENTS_ID) AS CNT ");
-		sqlBuf.append(" FROM ");
-		sqlBuf.append("CTT").append(".");
-		sqlBuf.append("TRNMCAFEE");
-		sqlBuf.append(" TRNMCF ");
-		sqlBuf.append(" WHERE ");
-		sqlBuf.append(" TRNMCF.DELETE_YMD IS NULL ");
-		sqlBuf.append(" AND TRNMCF.INPUT_NO IS NOT NULL ");
-		sqlBuf.append(" AND TRNMCF.CONTENTS_ID = :CONTENTS_ID ");
+		StringBuilder query = new StringBuilder();
 
-		String sql = sqlBuf.toString();
+		query.append(" SELECT ");
+		query.append(" COUNT(*) ");
+		query.append(" FROM ");
+		query.append(" TRNBLDJOINT ");
+		query.append(" BJ ");
+		query.append(" INNER JOIN ");
+		query.append(" TRNCONTRACT ");
+		query.append(" TC ");
+		query.append(" ON TC.BLD_JOINT_NO = BJ.BLD_JOINT_NO ");
+		query.append(" AND TC.DELETE_YMD IS NULL ");
+		query.append(" AND TC.CONTRACT_CD = '2' ");
+		query.append(" INNER JOIN ");
+		query.append(" MSTCNTCLASSSERVICE ");
+		query.append(" MCCS ");
+		query.append(" ON MCCS.CNT_CLASS_CD = TC.CNT_CLASS_CD ");
+		query.append(" AND MCCS.DELETE_YMD IS NULL ");
+		query.append(" INNER JOIN ");
+		query.append(" MSTSERVICE ");
+		query.append(" MS ");
+		query.append(" ON MS.SERVICE_CD = MCCS.SERVICE_CD ");
+		query.append(" AND MS.DELETE_YMD IS NULL ");
+		query.append(" AND MS.SERVICE_KBN IN ('0', '1') ");
+		query.append(" WHERE ");
+		query.append(" BJ.DELETE_YMD IS NULL ");
+		query.append(" AND EXISTS ( ");
+		query.append(" SELECT ");
+		query.append(" MDS.SERVICE_CD ");
+		query.append(" FROM ");
+		query.append(" MSTDEVSERVICE ");
+		query.append(" MDS ");
+		query.append(" WHERE ");
+		query.append(" MDS.DELETE_YMD IS NULL  ");
+		query.append(" AND MDS.SERVICE_CD = MCCS.SERVICE_CD  ");
+		query.append(" AND MDS.DEV_SBT IN ('4', 'C') )");
+		query.append(" AND BJ.INPUT_NO = :INPUT_NO ");
+		query.append(" AND MS.SERVICE_CD = :SERVICE_CD ");
+
+		String sql = query.toString();
 		System.out.println(sql);
 	}
 

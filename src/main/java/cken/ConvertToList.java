@@ -25,4 +25,20 @@ public class ConvertToList {
 		}
 		return result;
 	}
+
+	public List<String> convertStringFileToList(String dir, String split) {
+
+		final String SPLIT = "\n";
+
+		final List<String> result = new ArrayList<>();
+		final List<String> listStr = ultils.readFileToList(split, dir);
+
+		for (final String str : listStr) {
+			if (StringUtils.isNotBlank(str.trim())) {
+				result.add(str.trim());
+			}
+
+		}
+		return result;
+	}
 }
