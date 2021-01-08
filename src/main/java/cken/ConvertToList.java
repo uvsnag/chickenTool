@@ -28,8 +28,6 @@ public class ConvertToList {
 
 	public List<String> convertStringFileToList(String dir, String split) {
 
-		final String SPLIT = "\n";
-
 		final List<String> result = new ArrayList<>();
 		final List<String> listStr = ultils.readFileToList(split, dir);
 

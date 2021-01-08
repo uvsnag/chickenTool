@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -16,10 +17,14 @@ public class ExcellUltis {
 
 	public static Ultils ultils = new Ultils();
 
-	public static void readExcel(final String[] args) throws IOException  {
-	// "https://o7planning.org/vi/11259/doc-ghi-file-excel-trong-java-su-dung-apache-poi#a5144240";
-		
-		File file = new File("E:\\fileexcel\\テーブルレイアウト（第５版）_TMP.xls");
+	public static void main(final String[] args) throws IOException {
+		// "https://o7planning.org/vi/11259/doc-ghi-file-excel-trong-java-su-dung-apache-poi#a5144240";
+
+//		File file = new File("D:\\excelf\\テーブルレイアウト（第５版）_HIS.xls");
+//		File file = new File("D:\\excelf\\テーブルレイアウト（第５版）_MST.xls");
+//		File file = new File("D:\\excelf\\テーブルレイアウト（第５版）_TMP.xls");
+		File file = new File("D:\\excelf\\テーブルレイアウト（第５版）_TRN.xls");
+
 		FileInputStream inputStream = new FileInputStream(file);
 		HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
 		int rowTable = 3;
@@ -76,7 +81,7 @@ public class ExcellUltis {
 		final String spilit = "\n";
 		int i = 0;
 		// get list
-		final List<String> listTableColu = ultils.readFileToList("#", "E:\\1.txt");
+		final List<String> listTableColu = ultils.readFileToList("#", "D:\\excel.txt");
 		final Set<String> setListColu = new HashSet<>();
 		String str2 = "";
 		// showItemList(listTableColu);
@@ -107,6 +112,9 @@ public class ExcellUltis {
 
 					if (!str2.startsWith(notTake) && !str2.trim().isEmpty()) {
 						setListColu.add(str2.trim());
+						if ("BILL".equals(str2.trim())) {
+							System.out.println("sd");
+						}
 					}
 				}
 			}
@@ -118,8 +126,11 @@ public class ExcellUltis {
 
 			final List<String> listResult = new ArrayList<>();
 			for (final String strTableColu : listTableColu) {
-				if (strTableColu.contains(strColu)) {
-					listResult.add(strTableColu.substring(0, strTableColu.indexOf(spilit)).trim());
+				int count = StringUtils.countMatches(strTableColu, strColu);
+				if (count > 0) {
+					if (!strTableColu.contains("_" + strColu) && !strTableColu.contains(strColu + "_")) {
+						listResult.add(strTableColu.substring(0, strTableColu.indexOf(spilit)).trim());
+					}
 				}
 			}
 			System.out.println("# " + i + " - size: " + listResult.size() + " -     " + strColu);

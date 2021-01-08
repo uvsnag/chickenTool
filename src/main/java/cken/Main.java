@@ -23,6 +23,7 @@ public class Main {
 	public static final int SQL_TO_SOURCE = 3;
 	public static final int SHOW_LIST = 4;
 	public static final int CONVERT_FILE_TO_LIST = 5;
+	public static final int EXCEL = 6;
 
 	/**
 	 * @param args
@@ -51,11 +52,13 @@ public class Main {
 		/** init var */
 //		final List<String> listOne1 = Arrays.asList(arrOne);
 //		final List<String> listTwo2 = convertToList.convertStringSourceToList("D:\\1.txt");
-		final List<String> listOne = convertToList.convertStringFileToList("D:\\1.txt", "\n");
-		final List<String> listTwo = convertToList.convertStringFileToList("D:\\2.txt", "\n");
+//		final List<String> listOne = convertToList.convertStringFileToList("D:\\1.txt", "\n");
+//		final List<String> listTwo = convertToList.convertStringFileToList("D:\\2.txt", "\n");
+		final List<String> listOne = null;
+		final List<String> listTwo = null;
 
 		/*********/
-		switch (COMPARE_LIST) {
+		switch (CONVERT_SOURCE_TO_JSON) {
 
 		case CONVERT_SOURCE_TO_JSON:
 			final HashMap<String, String> result = convertToMap.convertStringSourceToMap("D:\\1.txt");
@@ -80,6 +83,9 @@ public class Main {
 			break;
 		case CONVERT_FILE_TO_LIST:
 			break;
+		case EXCEL:
+			excellUltis.checkIntLong();
+			break;
 		default:
 
 		}
@@ -87,46 +93,28 @@ public class Main {
 	}
 
 	static void sourceToSql() {
-		StringBuilder query = new StringBuilder();
+		StringBuilder strBuf = new StringBuilder();
+		strBuf.append("select ");
+		strBuf.append(TableNames.MSTDEVICE + ".dev_mng_no, " + TableNames.MSTDEVICE);
+		strBuf.append(".dev_no, " + TableNames.MSTDEVICE + ".dev_sbt, ");
+		strBuf.append(TableNames.MSTDEVICE + ".dev_type_cd, " + TableNames.MSTDEVICE);
+		strBuf.append(".dev_state, " + TableNames.MSTDEVICE + ".company_cd, ");
+		strBuf.append(TableNames.MSTDEVICE + ".owner_kbn, " + TableNames.MSTDEVICE);
+		strBuf.append(".lease_no, " + TableNames.MSTDEVICE + ".lease_company_cd, ");
+		strBuf.append(TableNames.MSTDEVICE + ".lease_start_ymd, ");
+		strBuf.append(TableNames.MSTDEVICE + ".lease_end_ymd, " + TableNames.MSTDEVICE);
+		strBuf.append(".first_dev_in_ymd, " + TableNames.MSTDEVICE);
+		strBuf.append(".first_dev_out_ymd, " + TableNames.MSTDEVICE);
+		strBuf.append(".last_dev_in_ymd, " + TableNames.MSTDEVICE);
+		strBuf.append(".last_dev_out_ymd, " + TableNames.MSTDEVICE + ".change_ymd ");
+		strBuf.append("from " + TableNames.FULL_TRNDEVJOINT + ", ");
+		strBuf.append(TableNames.FULL_MSTDEVICE + " " + "where ");
+		strBuf.append(TableNames.TRNDEVJOINT + ".main_dev_mng_no = :main_dev_mng_no and ");
+		strBuf.append(TableNames.MSTDEVICE);
+		strBuf.append(".dev_mng_no = trndevjoint.sub_dev_mng_no " + "order by ");
+		strBuf.append(TableNames.MSTDEVICE + ".dev_mng_no ");
 
-		query.append(" SELECT ");
-		query.append(" COUNT(*) ");
-		query.append(" FROM ");
-		query.append(" TRNBLDJOINT ");
-		query.append(" BJ ");
-		query.append(" INNER JOIN ");
-		query.append(" TRNCONTRACT ");
-		query.append(" TC ");
-		query.append(" ON TC.BLD_JOINT_NO = BJ.BLD_JOINT_NO ");
-		query.append(" AND TC.DELETE_YMD IS NULL ");
-		query.append(" AND TC.CONTRACT_CD = '2' ");
-		query.append(" INNER JOIN ");
-		query.append(" MSTCNTCLASSSERVICE ");
-		query.append(" MCCS ");
-		query.append(" ON MCCS.CNT_CLASS_CD = TC.CNT_CLASS_CD ");
-		query.append(" AND MCCS.DELETE_YMD IS NULL ");
-		query.append(" INNER JOIN ");
-		query.append(" MSTSERVICE ");
-		query.append(" MS ");
-		query.append(" ON MS.SERVICE_CD = MCCS.SERVICE_CD ");
-		query.append(" AND MS.DELETE_YMD IS NULL ");
-		query.append(" AND MS.SERVICE_KBN IN ('0', '1') ");
-		query.append(" WHERE ");
-		query.append(" BJ.DELETE_YMD IS NULL ");
-		query.append(" AND EXISTS ( ");
-		query.append(" SELECT ");
-		query.append(" MDS.SERVICE_CD ");
-		query.append(" FROM ");
-		query.append(" MSTDEVSERVICE ");
-		query.append(" MDS ");
-		query.append(" WHERE ");
-		query.append(" MDS.DELETE_YMD IS NULL  ");
-		query.append(" AND MDS.SERVICE_CD = MCCS.SERVICE_CD  ");
-		query.append(" AND MDS.DEV_SBT IN ('4', 'C') )");
-		query.append(" AND BJ.INPUT_NO = :INPUT_NO ");
-		query.append(" AND MS.SERVICE_CD = :SERVICE_CD ");
-
-		String sql = query.toString();
+		String sql = strBuf.toString();
 		System.out.println(sql);
 	}
 
